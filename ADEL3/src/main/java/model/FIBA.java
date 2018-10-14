@@ -1,15 +1,25 @@
 package model;
 
-public class FIBA {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import structures.RedBlackTree;
+
+public class FIBA implements Serializable {
 	
-	private NBA nba;
+	private RedBlackTree<Comparable, Player> parent;
 	
 	public FIBA() {
-		
+		parent = new RedBlackTree<Comparable, Player>();
 	}
 	
-	public NBA getNba() {
-		return nba;
+	public void addPlayersByPoints(Player p) {
+		parent.insert(p.getPointsPerMatch(), p);
 	}
+	
+	public ArrayList<Player> getPlayers(){
+		return parent.getElements();
+	}
+
 
 }
