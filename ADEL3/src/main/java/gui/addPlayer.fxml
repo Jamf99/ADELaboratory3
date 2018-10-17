@@ -20,13 +20,13 @@
       <Button fx:id="butAddPlayer" layoutX="155.0" layoutY="315.0" mnemonicParsing="false" onAction="#addP" text="Add player" />
       <ImageView fitHeight="69.0" fitWidth="126.0" layoutX="257.0" layoutY="293.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../resources/view/ball2.jpg" />
+            <Image url="@ball2.jpg" />
          </image>
       </ImageView>
       <TextField fx:id="txtName" layoutX="173.0" layoutY="26.0" />
       <ImageView fitHeight="69.0" fitWidth="126.0" layoutX="48.0" layoutY="293.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../resources/view/ball2.jpg" />
+            <Image url="@ball2.jpg" />
          </image>
       </ImageView>
       <TextField fx:id="txtAge" layoutX="173.0" layoutY="57.0" />
