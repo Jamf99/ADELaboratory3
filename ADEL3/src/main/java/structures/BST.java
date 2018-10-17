@@ -1,7 +1,6 @@
 package structures;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public abstract class BST<K extends Comparable, V> implements IBST<K, V>, Serializable{
 
@@ -201,16 +200,6 @@ public abstract class BST<K extends Comparable, V> implements IBST<K, V>, Serial
 		ans[0]=x;
 		ans[1]=y;
 		return ans;
-	}
-	
-	public ArrayList<V> getElements() {
-		if(raiz == null) {
-			return null;
-		}else {
-			ArrayList<V> elements = new ArrayList<V>();
-			raiz.ordenarPreorden(elements);
-			return elements;
-		}
 	}
 	
 }

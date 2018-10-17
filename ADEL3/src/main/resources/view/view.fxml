@@ -12,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="627.0" prefWidth="691.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.StartController">
    <children>
-      <Label layoutX="282.0" layoutY="21.0" text="FIBA Estatistics">
+      <Label layoutX="284.0" layoutY="21.0" text="FIBA Statistics">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -34,7 +34,7 @@
             <Image url="@ball.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="butAddPlayer" layoutX="99.0" layoutY="473.0" mnemonicParsing="false" onAction="#addPlayer" prefHeight="25.0" prefWidth="158.0" text="Add player">
+      <Button fx:id="butAddPlayer" layoutX="99.0" layoutY="513.0" mnemonicParsing="false" onAction="#addPlayer" prefHeight="25.0" prefWidth="158.0" text="Add player">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
@@ -99,12 +99,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="butSave" layoutX="99.0" layoutY="525.0" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="158.0" text="Save">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="butLoadPlayers" layoutX="98.0" layoutY="420.0" mnemonicParsing="false" onAction="#loadPlayers" prefHeight="25.0" prefWidth="158.0" text="Load players">
+      <Button fx:id="butLoadPlayers" layoutX="98.0" layoutY="434.0" mnemonicParsing="false" onAction="#loadPlayers" prefHeight="25.0" prefWidth="158.0" text="Load players">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

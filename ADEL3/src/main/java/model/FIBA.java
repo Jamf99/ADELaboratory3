@@ -3,23 +3,42 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import structures.AVLTree;
 import structures.RedBlackTree;
 
 public class FIBA implements Serializable {
 	
-	private RedBlackTree<Comparable, Player> parent;
+	private RedBlackTree<Comparable, Player> parentRB;
+	private AVLTree<Comparable, Player> parentAVL;
 	
 	public FIBA() {
-		parent = new RedBlackTree<Comparable, Player>();
+		parentRB = new RedBlackTree<Comparable, Player>();
 	}
 	
-	public void addPlayersByPoints(Player p) {
-		parent.insert(p.getPointsPerMatch(), p);
+	public void addPlayerByPoints(Player p) {
+		parentRB.insert(p.getPointsPerMatch(), p);
 	}
 	
-	public ArrayList<Player> getPlayers(){
-		return parent.getElements();
+	public void addPlayerByRebounds(Player p) {
+		parentRB.insert(p.getPointsPerMatch(), p);
 	}
-
-
+	
+	public void addPlayerBySteals(Player p) {
+		parentRB.insert(p.getPointsPerMatch(), p);
+	}
+	
+	public void addPlayerByAssists(Player p) {
+		parentAVL.insert(p.getPointsPerMatch(), p);
+	}
+	
+	public void addPlayerByBlocks(Player p) {
+		parentAVL.insert(p.getPointsPerMatch(), p);
+	}
+	
+	public ArrayList<Player> getPlayersPreorden(){
+		return parentRB.getElements();
+	}
+	
+	
+	
 }

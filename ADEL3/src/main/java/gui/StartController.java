@@ -15,10 +15,14 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 import model.FIBA;
 import model.Player;
 
@@ -83,7 +87,18 @@ public class StartController implements Initializable{
 
     @FXML
     void addPlayer(ActionEvent event) {
-
+    	try {
+    		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("addPlayer.fxml"));
+    		Parent root1 = (Parent) fxmlLoader.load();
+    		Stage stage = new Stage();
+    		stage.setTitle("Add a player");
+    		stage.setScene(new Scene(root1));  
+    		stage.show();
+    	}catch(FileNotFoundException e ) {
+    		e.printStackTrace();
+    	}catch(IOException s) {
+    		s.printStackTrace();
+    	}
     }
 
     @FXML
@@ -115,18 +130,13 @@ public class StartController implements Initializable{
     void loadPlayers(ActionEvent event) {
 
     }
-
-    @FXML
-    void save(ActionEvent event) {
-    	
-    }
     
     public void addPlayerTxt() {
     	
     }
     
     public void refreshListView() {
-    	ArrayList<Player> p = fiba.getPlayers();
+    	ArrayList<Player> p = fiba.getPlayersPreorden();
     	playersList.getItems().addAll(p);
     }
     
@@ -191,16 +201,15 @@ public class StartController implements Initializable{
     		String m = br.readLine();
     		m = br.readLine();
     		int counter = 0;
-    		while(m != null && counter <= 5) {
+    		while(m != null && counter <= 500) {
     			String[] line = m.split(",");
     			Player player = new Player(line[2], line[1], Integer.parseInt(line[4]), Double.parseDouble(line[7]),
     					Double.parseDouble(line[12]), Double.parseDouble(line[13]), Double.parseDouble(line[14]),
     					Double.parseDouble(line[15]));
-    			fiba.addPlayersByPoints(player);
-    			guardar();
-    			counter ++;
-    			System.out.println(counter);
+    			fiba.addPlayerByPoints(player);
+    			counter ++;	
     		}	
+    		guardar();
     		br.close();
     		fr.close();
     	}catch(FileNotFoundException s) {
@@ -213,8 +222,8 @@ public class StartController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 //		read();
-		readSerializable();
-		refreshListView();
+//		readSerializable();
+//		refreshListView();
 	}
 
 }

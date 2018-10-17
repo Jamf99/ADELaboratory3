@@ -26,4 +26,5 @@ public class RBTNode<K extends Comparable,V> extends BSTNode implements Serializ
 	public void setColor(Color color) {
 		this.color = color;
 	}
+	
 }

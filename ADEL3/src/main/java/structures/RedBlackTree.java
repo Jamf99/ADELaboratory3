@@ -1,6 +1,7 @@
 package structures;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 //import java.util.ArrayList;
 
@@ -133,6 +134,14 @@ public class RedBlackTree<K extends Comparable,V> extends BST<K,V> implements Se
 		return params[1];
 	}
 
- 
+	public ArrayList<V> getElements() {
+		if(raiz == null) {
+			return null;
+		}else {
+			ArrayList<V> elements = new ArrayList<V>();
+			raiz.ordenarPreorden(elements);
+			return elements;
+		}
+	}
 
 }

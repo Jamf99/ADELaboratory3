@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public abstract class BSTNode <K extends Comparable, V> implements Comparable, Serializable{
 
-	
 	protected K key;
 	protected V value;
 	protected int altura;
@@ -88,7 +87,7 @@ public abstract class BSTNode <K extends Comparable, V> implements Comparable, S
 			derecho.ordenarPreorden(e); 
 		}
 	}
-	
+		
 	@Override
 	public int compareTo(Object o) {
 		return key.compareTo(((BSTNode)o).key);
