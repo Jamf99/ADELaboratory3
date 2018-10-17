@@ -65,6 +65,7 @@ public abstract class BSTNode <K extends Comparable, V> implements Comparable, S
 	public void setClon(BSTNode<K, V> clon) {
 		this.clon = clon;
 	}
+	
 	public void actualizarAltura() {
 		if(derecho==null && izquierdo==null) {
 			altura=-1;
@@ -80,10 +81,11 @@ public abstract class BSTNode <K extends Comparable, V> implements Comparable, S
 	
 	public void mostrarPreorden(ArrayList<V> e) {
 		e.add(getValue());
-		if(izquierdo != null) {
+		if(izquierdo.getValue() != null) {
+			System.out.println(getValue());
 			izquierdo.mostrarPreorden(e);
 		}
-		if(derecho != null) {
+		if(derecho.getValue() != null) {
 			derecho.mostrarPreorden(e); 
 		}
 	}
