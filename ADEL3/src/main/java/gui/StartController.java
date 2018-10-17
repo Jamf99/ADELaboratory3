@@ -92,6 +92,7 @@ public class StartController implements Initializable{
     		Parent root1 = (Parent) fxmlLoader.load();
     		Stage stage = new Stage();
     		stage.setTitle("Add a player");
+    		stage.setResizable(false);
     		stage.setScene(new Scene(root1));  
     		stage.show();
     	}catch(FileNotFoundException e ) {
@@ -140,13 +141,13 @@ public class StartController implements Initializable{
     	playersList.getItems().addAll(p);
     }
     
-    public void guardar() {
+    public void save(ArrayList<Player> players) {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		try {
-			fos = new FileOutputStream("datas/saved.dat");
+			fos = new FileOutputStream("datas/saved.dat", true);
 			oos = new ObjectOutputStream(fos);
-			oos.writeObject(fiba);
+			oos.writeObject(players);
 		}catch(FileNotFoundException e) {
 			e.printStackTrace();
 		}catch(IOException s) {
@@ -201,15 +202,35 @@ public class StartController implements Initializable{
     		String m = br.readLine();
     		m = br.readLine();
     		int counter = 0;
-    		while(m != null && counter <= 500) {
+    		boolean finished = false;
+    		Player p;
+    		ArrayList<Player> players = new ArrayList<Player>();
+    		while(m != null && !finished) {
     			String[] line = m.split(",");
-    			Player player = new Player(line[2], line[1], Integer.parseInt(line[4]), Double.parseDouble(line[7]),
-    					Double.parseDouble(line[12]), Double.parseDouble(line[13]), Double.parseDouble(line[14]),
-    					Double.parseDouble(line[15]));
-    			fiba.addPlayerByPoints(player);
-    			counter ++;	
-    		}	
-    		guardar();
+    			if(line[2].equals("0")) {
+    				finished = true;
+    			} else {
+    				String l1 = line[2].isEmpty() ? "0" : line[2];
+    				String l2 = line[1].isEmpty() ? "0" : line[1];
+    				int l3 = line[4].isEmpty() ? 0 : Integer.parseInt(line[4]);
+    				double l4 = line[7].isEmpty() ? 0 : Double.parseDouble(line[7]);
+    				double l5 = line[12].isEmpty() ? 0 : Double.parseDouble(line[12]);
+    				double l6 = line[13].isEmpty() ? 0 : Double.parseDouble(line[13]);
+    				double l7 = line[14].isEmpty() ? 0 : Double.parseDouble(line[14]);
+    				double l8 = line[15].isEmpty() ? 0 : Double.parseDouble(line[15]);
+    				p = new Player(l1,l2,l3,l4,l5,l6,l7,l8);
+        			players.add(p);
+        			counter ++;
+        			m = br.readLine();
+        			if(counter == 500) {
+        				save(players);
+        				counter = 0;
+        				players = new ArrayList<Player>();
+        			}
+    			}
+    		}
+    		if(counter % 500 != 0) 
+    			save(players);
     		br.close();
     		fr.close();
     	}catch(FileNotFoundException s) {
