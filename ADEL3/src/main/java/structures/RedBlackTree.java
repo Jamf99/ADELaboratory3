@@ -139,7 +139,7 @@ public class RedBlackTree<K extends Comparable,V> extends BST<K,V> implements Se
 			return null;
 		}else {
 			ArrayList<V> elements = new ArrayList<V>();
-			raiz.ordenarPreorden(elements);
+			raiz.mostrarPreorden(elements);
 			return elements;
 		}
 	}

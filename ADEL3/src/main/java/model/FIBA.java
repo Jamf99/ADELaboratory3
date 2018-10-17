@@ -38,6 +38,22 @@ public class FIBA implements Serializable {
 	public ArrayList<Player> getPlayersPreorden(){
 		return parentRB.getElements();
 	}
+
+	public RedBlackTree<Comparable, Player> getParentRB() {
+		return parentRB;
+	}
+
+	public AVLTree<Comparable, Player> getParentAVL() {
+		return parentAVL;
+	}
+
+	public void setParentRB(RedBlackTree<Comparable, Player> parentRB) {
+		this.parentRB = parentRB;
+	}
+
+	public void setParentAVL(AVLTree<Comparable, Player> parentAVL) {
+		this.parentAVL = parentAVL;
+	}	
 	
 	
 	

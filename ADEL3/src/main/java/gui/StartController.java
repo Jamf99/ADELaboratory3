@@ -141,13 +141,13 @@ public class StartController implements Initializable{
     	playersList.getItems().addAll(p);
     }
     
-    public void save(ArrayList<Player> players) {
+    public void save() {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		try {
 			fos = new FileOutputStream("datas/saved.dat", true);
 			oos = new ObjectOutputStream(fos);
-			oos.writeObject(players);
+			oos.writeObject(fiba);
 		}catch(FileNotFoundException e) {
 			e.printStackTrace();
 		}catch(IOException s) {
@@ -172,8 +172,8 @@ public class StartController implements Initializable{
 		try {
 			fis = new FileInputStream("datas/saved.dat");
 			oos = new ObjectInputStream(fis);
-			fiba = (FIBA)oos.readObject();
-			
+			fiba = (FIBA) oos.readObject();
+			refreshListView();
 		} catch (FileNotFoundException e) {
 		       e.printStackTrace();
 		    } catch (ClassNotFoundException e) {
@@ -201,11 +201,10 @@ public class StartController implements Initializable{
     		BufferedReader br = new BufferedReader(fr);
     		String m = br.readLine();
     		m = br.readLine();
-    		int counter = 0;
     		boolean finished = false;
     		Player p;
-    		ArrayList<Player> players = new ArrayList<Player>();
-    		while(m != null && !finished) {
+    		int i = 0;
+    		while(m != null && !finished && i < 100) {
     			String[] line = m.split(",");
     			if(line[2].equals("0")) {
     				finished = true;
@@ -219,18 +218,12 @@ public class StartController implements Initializable{
     				double l7 = line[14].isEmpty() ? 0 : Double.parseDouble(line[14]);
     				double l8 = line[15].isEmpty() ? 0 : Double.parseDouble(line[15]);
     				p = new Player(l1,l2,l3,l4,l5,l6,l7,l8);
-        			players.add(p);
-        			counter ++;
+    				fiba.addPlayerByPoints(p);
         			m = br.readLine();
-        			if(counter == 500) {
-        				save(players);
-        				counter = 0;
-        				players = new ArrayList<Player>();
-        			}
+        			i++;
     			}
     		}
-    		if(counter % 500 != 0) 
-    			save(players);
+    		save();
     		br.close();
     		fr.close();
     	}catch(FileNotFoundException s) {
@@ -243,8 +236,7 @@ public class StartController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 //		read();
-//		readSerializable();
-//		refreshListView();
+		readSerializable();
 	}
-
+	
 }

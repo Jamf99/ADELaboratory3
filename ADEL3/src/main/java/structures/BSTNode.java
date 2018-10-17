@@ -78,13 +78,13 @@ public abstract class BSTNode <K extends Comparable, V> implements Comparable, S
 		altura++;
 	}
 	
-	public void ordenarPreorden(ArrayList<V> e) {
+	public void mostrarPreorden(ArrayList<V> e) {
 		e.add(getValue());
 		if(izquierdo != null) {
-			izquierdo.ordenarPreorden(e);
+			izquierdo.mostrarPreorden(e);
 		}
 		if(derecho != null) {
-			derecho.ordenarPreorden(e); 
+			derecho.mostrarPreorden(e); 
 		}
 	}
 		
