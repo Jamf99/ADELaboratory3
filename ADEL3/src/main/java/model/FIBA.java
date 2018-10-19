@@ -13,6 +13,7 @@ public class FIBA implements Serializable {
 	
 	public FIBA() {
 		parentRB = new RedBlackTree<Comparable, Player>();
+		parentAVL = new AVLTree<Comparable, Player>();
 	}
 	
 	public void addPlayerByPoints(Player p) {
@@ -20,41 +21,34 @@ public class FIBA implements Serializable {
 	}
 	
 	public void addPlayerByRebounds(Player p) {
-		parentRB.insert(p.getPointsPerMatch(), p);
+		parentRB.insert(p.getReboundsPerMatch(), p);
 	}
 	
 	public void addPlayerBySteals(Player p) {
-		parentRB.insert(p.getPointsPerMatch(), p);
+		parentRB.insert(p.getStealingPerMatch(), p);
 	}
 	
 	public void addPlayerByAssists(Player p) {
-		parentAVL.insert(p.getPointsPerMatch(), p);
+		parentAVL.insert(p.getAssistsPerMatch(), p);
 	}
 	
 	public void addPlayerByBlocks(Player p) {
-		parentAVL.insert(p.getPointsPerMatch(), p);
+		parentAVL.insert(p.getBlocksPerMatch(), p);
 	}
 	
 	public ArrayList<Player> getPlayersPreorden(){
 		return parentRB.getElements();
 	}
-
-	public RedBlackTree<Comparable, Player> getParentRB() {
-		return parentRB;
+	
+	public Player searchPlayersRB(double o) {
+		Player p = parentRB.consultar(o).getValue();
+		return p;
+	}
+	
+	public Player searchPlayersAVL(double o) {
+		Player p = parentAVL.consultar(o).getValue();
+		return p;
 	}
 
-	public AVLTree<Comparable, Player> getParentAVL() {
-		return parentAVL;
-	}
 
-	public void setParentRB(RedBlackTree<Comparable, Player> parentRB) {
-		this.parentRB = parentRB;
-	}
-
-	public void setParentAVL(AVLTree<Comparable, Player> parentAVL) {
-		this.parentAVL = parentAVL;
-	}	
-	
-	
-	
 }

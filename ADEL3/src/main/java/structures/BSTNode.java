@@ -82,7 +82,6 @@ public abstract class BSTNode <K extends Comparable, V> implements Comparable, S
 	public void mostrarPreorden(ArrayList<V> e) {
 		e.add(getValue());
 		if(izquierdo.getValue() != null) {
-			System.out.println(getValue());
 			izquierdo.mostrarPreorden(e);
 		}
 		if(derecho.getValue() != null) {

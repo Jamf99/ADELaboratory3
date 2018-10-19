@@ -4,8 +4,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import model.Player;
 
 public class AddPlayerDialog {
+	
+	private StartController principal;
+	private boolean flag = false;
+	
+	public AddPlayerDialog(StartController principal) {
+		this.principal = principal;
+	}
 
     @FXML
     private Button butAddPlayer;
@@ -33,10 +41,22 @@ public class AddPlayerDialog {
 
     @FXML
     private TextField txtRPM;
+    
+    public boolean getFlag() {
+    	return flag;
+    }
+    
+    public Button getButtAddPlayer() {
+    	return butAddPlayer;
+    }
 
     @FXML
     void addP(ActionEvent event) {
-
+    	Player p = new Player(txtName.getText(), txtTeam.getText(), Integer.parseInt(txtAge.getText()),
+    			Double.parseDouble(txtPPM.getText()), Double.parseDouble(txtRPM.getText()), Double.parseDouble(txtAPM.getText()),
+    			Double.parseDouble(txtSPM.getText()), Double.parseDouble(txtBPM.getText()));
+    	flag = true;
+    	principal.addPlayer(p);
     }
 
 }

@@ -22,7 +22,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <ListView fx:id="playersList" layoutX="78.0" layoutY="135.0" prefHeight="249.0" prefWidth="200.0" />
+      <ListView fx:id="playersList" layoutX="78.0" layoutY="135.0" onMouseClicked="#refreshPlayers" prefHeight="249.0" prefWidth="200.0" />
       <Separator layoutX="343.0" layoutY="76.0" orientation="VERTICAL" prefHeight="538.0" prefWidth="2.0" />
       <ImageView fitHeight="76.0" fitWidth="75.0" layoutX="39.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -34,7 +34,7 @@
             <Image url="@ball.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="butAddPlayer" layoutX="99.0" layoutY="513.0" mnemonicParsing="false" onAction="#addPlayer" prefHeight="25.0" prefWidth="158.0" text="Add player">
+      <Button fx:id="butAddPlayer" layoutX="99.0" layoutY="436.0" mnemonicParsing="false" onAction="#addPlayer" prefHeight="25.0" prefWidth="158.0" text="Add player">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
@@ -99,7 +99,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="butLoadPlayers" layoutX="98.0" layoutY="434.0" mnemonicParsing="false" onAction="#loadPlayers" prefHeight="25.0" prefWidth="158.0" text="Load players">
+      <Button fx:id="butSave" layoutX="98.0" layoutY="511.0" mnemonicParsing="false" onAction="#finalSave" prefHeight="25.0" prefWidth="158.0" text="Save">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

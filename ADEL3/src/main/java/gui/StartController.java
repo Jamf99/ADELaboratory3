@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -19,9 +20,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.FIBA;
 import model.Player;
@@ -29,6 +34,11 @@ import model.Player;
 public class StartController implements Initializable{
 	
 	private FIBA fiba;
+	
+	@SuppressWarnings("unused")
+	private AddPlayerDialog apd;
+	
+	private Stage stage;
 
     @FXML
     private ListView<Player> playersList;
@@ -76,10 +86,7 @@ public class StartController implements Initializable{
     private Button butFilterPlayersByBlocks;
 
     @FXML
-    private Button butSave;
-
-    @FXML
-    private Button butLoadPlayers;
+    private Button butSave;    
     
     public StartController() {
     	fiba = new FIBA();
@@ -88,58 +95,141 @@ public class StartController implements Initializable{
     @FXML
     void addPlayer(ActionEvent event) {
     	try {
-    		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("addPlayer.fxml"));
-    		Parent root1 = (Parent) fxmlLoader.load();
-    		Stage stage = new Stage();
+    		apd = new AddPlayerDialog(this);
+    		FXMLLoader fx = new FXMLLoader(getClass().getResource("addPlayer.fxml"));
+    		Parent root1 = (Parent) fx.load();
+    		stage = new Stage();
     		stage.setTitle("Add a player");
     		stage.setResizable(false);
     		stage.setScene(new Scene(root1));  
     		stage.show();
+//    		try {
+//				Thread.sleep(10000);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//    		stage.close();
     	}catch(FileNotFoundException e ) {
     		e.printStackTrace();
     	}catch(IOException s) {
     		s.printStackTrace();
     	}
     }
-
-    @FXML
-    void filterPlayersByAssists(ActionEvent event) {
-
+    
+    public void addPlayer(Player p) {
+    	fiba.addPlayerByPoints(p);
+    	stage.close();
     }
 
     @FXML
-    void filterPlayersByBlocks(ActionEvent event) {
-
+    void refreshPlayers(MouseEvent event) {
+    	Player p = playersList.getSelectionModel().getSelectedItem();
+    	refresh(p);
+    }
+       
+    @FXML
+    void finalSave(ActionEvent event) {
+    	save();
+    }
+    
+    void refresh(Player p) {
+    	name.setText(p.getName());
+    	team.setText(p.getTeam());
+    	age.setText(p.getAge()+"");
+    	pointsPerMatch.setText(p.getPointsPerMatch()+"");
+    	reboundsPerMatch.setText(p.getReboundsPerMatch()+"");
+    	stealingsPerMatch.setText(p.getStealingPerMatch()+"");
+    	blocksPerMatch.setText(p.getBlocksPerMatch()+"");
+    	assistsPerMatch.setText(p.getAssistsPerMatch()+"");
+    }
+    
+    public void refreshListView() {
+    	playersList.getItems().clear();
+    	ArrayList<Player> p = fiba.getPlayersPreorden();
+    	playersList.getItems().addAll(p);
     }
 
     @FXML
     void filterPlayersByPoints(ActionEvent event) {
+    	read(1);
+    	readSerializable();
+    	refreshListView();
+    	TextInputDialog dialog = new TextInputDialog("");
+    	dialog.setTitle("Enter the points!");
+    	dialog.setHeaderText("Please, enter the points that you search a player");
+    	dialog.setContentText("");
 
-    }
-
-    @FXML
-    void filterPlayersByRebounds(ActionEvent event) {
-
-    }
-
-    @FXML
-    void filterPlayersByStealings(ActionEvent event) {
-
-    }
-
-    @FXML
-    void loadPlayers(ActionEvent event) {
-
+    	Optional<String> result = dialog.showAndWait();
+    	if (result.isPresent()){
+    		Player p = fiba.searchPlayersRB(Double.parseDouble(result.get()));
+        	refresh(p);
+        	Alert alert = new Alert(AlertType.INFORMATION);
+        	alert.setTitle("Found player");
+        	alert.setHeaderText("A player with "+result.get()+" points has been found");
+        	alert.setContentText(p.getName());
+        	alert.showAndWait();
+    	}
     }
     
-    public void addPlayerTxt() {
+    @FXML
+    void filterPlayersByRebounds(ActionEvent event) {
+    	fiba = null;
+    	fiba = new FIBA();
+    	read(2);
+    	readSerializable();    	
+    	TextInputDialog dialog = new TextInputDialog("");
+    	dialog.setTitle("Enter the rebounds!");
+    	dialog.setHeaderText("Please, enter the rebounds that you search a player");
+    	dialog.setContentText("");
+
+    	Optional<String> result = dialog.showAndWait();
+    	if (result.isPresent()){
+    		Player p = fiba.searchPlayersRB(Double.parseDouble(result.get()));
+        	refresh(p);
+        	Alert alert = new Alert(AlertType.INFORMATION);
+        	alert.setTitle("Found player");
+        	alert.setHeaderText("A player with "+result.get()+" rebounds has been found");
+        	alert.setContentText(p.getName());
+        	alert.showAndWait();
+    	}
+    }
+    
+    @FXML
+    void filterPlayersByStealings(ActionEvent event) {
+    	fiba = null;
+    	fiba = new FIBA();
+    	read(5);
+    	readSerializable();    	
+    	TextInputDialog dialog = new TextInputDialog("");
+    	dialog.setTitle("Enter the stealings!");
+    	dialog.setHeaderText("Please, enter the stealings that you search a player");
+    	dialog.setContentText("");
+
+    	Optional<String> result = dialog.showAndWait();
+    	if (result.isPresent()){
+    		Player p = fiba.searchPlayersRB(Double.parseDouble(result.get()));
+        	refresh(p);
+        	Alert alert = new Alert(AlertType.INFORMATION);
+        	alert.setTitle("Found player");
+        	alert.setHeaderText("A player with "+result.get()+" stealings has been found");
+        	alert.setContentText(p.getName());
+        	alert.showAndWait();
+    	}
+    }
+    
+    @FXML
+    void filterPlayersByBlocks(ActionEvent event) {
     	
     }
     
-    public void refreshListView() {
-    	ArrayList<Player> p = fiba.getPlayersPreorden();
-    	playersList.getItems().addAll(p);
+    @FXML
+    void filterPlayersByAssists(ActionEvent event) {
+
     }
+    
+
+    
     
     public void save() {
 		FileOutputStream fos = null;
@@ -173,7 +263,6 @@ public class StartController implements Initializable{
 			fis = new FileInputStream("datas/saved.dat");
 			oos = new ObjectInputStream(fis);
 			fiba = (FIBA) oos.readObject();
-			refreshListView();
 		} catch (FileNotFoundException e) {
 		       e.printStackTrace();
 		    } catch (ClassNotFoundException e) {
@@ -194,7 +283,7 @@ public class StartController implements Initializable{
 		    }
     }
        
-    public void read() {
+    public void read(int type) {
     	try {
     		File file = new File("datas/dataBase.csv");
     		FileReader fr = new FileReader(file);
@@ -211,14 +300,24 @@ public class StartController implements Initializable{
     			} else {
     				String l1 = line[2].isEmpty() ? "0" : line[2];
     				String l2 = line[1].isEmpty() ? "0" : line[1];
-    				int l3 = line[4].isEmpty() ? 0 : Integer.parseInt(line[4]);
+    				int l3 = line[3].isEmpty() ? 0 : Integer.parseInt(line[3]);
     				double l4 = line[7].isEmpty() ? 0 : Double.parseDouble(line[7]);
     				double l5 = line[12].isEmpty() ? 0 : Double.parseDouble(line[12]);
     				double l6 = line[13].isEmpty() ? 0 : Double.parseDouble(line[13]);
     				double l7 = line[14].isEmpty() ? 0 : Double.parseDouble(line[14]);
     				double l8 = line[15].isEmpty() ? 0 : Double.parseDouble(line[15]);
     				p = new Player(l1,l2,l3,l4,l5,l6,l7,l8);
-    				fiba.addPlayerByPoints(p);
+    				if(type == 1) {
+    					fiba.addPlayerByPoints(p);
+    				}else if(type == 2) {
+    					fiba.addPlayerByRebounds(p);
+    				}else if(type == 3) {
+    					fiba.addPlayerByAssists(p);
+    				}else if(type == 4) {
+    					fiba.addPlayerByBlocks(p);
+    				}else {
+    					fiba.addPlayerBySteals(p);
+    				}
         			m = br.readLine();
         			i++;
     			}
@@ -234,9 +333,10 @@ public class StartController implements Initializable{
     }
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-//		read();
+	public void initialize(URL location, ResourceBundle resources) {		
+//		read(1);
 		readSerializable();
+		refreshListView();
 	}
 	
 }
