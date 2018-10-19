@@ -103,13 +103,6 @@ public class StartController implements Initializable{
     		stage.setResizable(false);
     		stage.setScene(new Scene(root1));  
     		stage.show();
-//    		try {
-//				Thread.sleep(10000);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//    		stage.close();
     	}catch(FileNotFoundException e ) {
     		e.printStackTrace();
     	}catch(IOException s) {
@@ -153,7 +146,6 @@ public class StartController implements Initializable{
     @FXML
     void filterPlayersByPoints(ActionEvent event) {
     	read(1);
-    	readSerializable();
     	refreshListView();
     	TextInputDialog dialog = new TextInputDialog("");
     	dialog.setTitle("Enter the points!");
@@ -177,7 +169,6 @@ public class StartController implements Initializable{
     	fiba = null;
     	fiba = new FIBA();
     	read(2);
-    	readSerializable();    	
     	TextInputDialog dialog = new TextInputDialog("");
     	dialog.setTitle("Enter the rebounds!");
     	dialog.setHeaderText("Please, enter the rebounds that you search a player");
@@ -199,8 +190,7 @@ public class StartController implements Initializable{
     void filterPlayersByStealings(ActionEvent event) {
     	fiba = null;
     	fiba = new FIBA();
-    	read(5);
-    	readSerializable();    	
+    	read(5);    	
     	TextInputDialog dialog = new TextInputDialog("");
     	dialog.setTitle("Enter the stealings!");
     	dialog.setHeaderText("Please, enter the stealings that you search a player");
@@ -227,10 +217,7 @@ public class StartController implements Initializable{
     void filterPlayersByAssists(ActionEvent event) {
 
     }
-    
 
-    
-    
     public void save() {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
