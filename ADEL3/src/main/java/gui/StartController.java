@@ -210,12 +210,46 @@ public class StartController implements Initializable{
     
     @FXML
     void filterPlayersByBlocks(ActionEvent event) {
-    	
+    	fiba = null;
+    	fiba = new FIBA();
+    	read(4);    	
+    	TextInputDialog dialog = new TextInputDialog("");
+    	dialog.setTitle("Enter the Blocks!");
+    	dialog.setHeaderText("Please, enter the stealings that you search a player");
+    	dialog.setContentText("");
+
+    	Optional<String> result = dialog.showAndWait();
+    	if (result.isPresent()){
+    		Player p = fiba.searchPlayersAVL(Double.parseDouble(result.get()));
+        	refresh(p);
+        	Alert alert = new Alert(AlertType.INFORMATION);
+        	alert.setTitle("Found player");
+        	alert.setHeaderText("A player with "+result.get()+" blocks has been found");
+        	alert.setContentText(p.getName());
+        	alert.showAndWait();
+    	}
     }
     
     @FXML
     void filterPlayersByAssists(ActionEvent event) {
+    	fiba = null;
+    	fiba = new FIBA();
+    	read(3);    	
+    	TextInputDialog dialog = new TextInputDialog("");
+    	dialog.setTitle("Enter the assists!");
+    	dialog.setHeaderText("Please, enter the assists that you search a player");
+    	dialog.setContentText("");
 
+    	Optional<String> result = dialog.showAndWait();
+    	if (result.isPresent()){
+    		Player p = fiba.searchPlayersAVL(Double.parseDouble(result.get()));
+        	refresh(p);
+        	Alert alert = new Alert(AlertType.INFORMATION);
+        	alert.setTitle("Found player");
+        	alert.setHeaderText("A player with "+result.get()+" assists has been found");
+        	alert.setContentText(p.getName());
+        	alert.showAndWait();
+    	}
     }
 
     public void save() {
