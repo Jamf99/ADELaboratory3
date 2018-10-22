@@ -11,8 +11,7 @@ public class AddPlayerDialog {
 	private StartController principal;
 	private boolean flag = false;
 	
-	public AddPlayerDialog(StartController principal) {
-		this.principal = principal;
+	public AddPlayerDialog() {
 	}
 
     @FXML

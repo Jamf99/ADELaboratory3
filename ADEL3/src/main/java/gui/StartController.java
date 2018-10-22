@@ -95,7 +95,7 @@ public class StartController implements Initializable{
     @FXML
     void addPlayer(ActionEvent event) {
     	try {
-    		apd = new AddPlayerDialog(this);
+    		apd = new AddPlayerDialog();
     		FXMLLoader fx = new FXMLLoader(getClass().getResource("addPlayer.fxml"));
     		Parent root1 = (Parent) fx.load();
     		stage = new Stage();
@@ -314,7 +314,7 @@ public class StartController implements Initializable{
     		boolean finished = false;
     		Player p;
     		int i = 0;
-    		while(m != null && !finished && i < 100) {
+    		while(m != null && !finished && i < 2000) {
     			String[] line = m.split(",");
     			if(line[2].equals("0")) {
     				finished = true;
