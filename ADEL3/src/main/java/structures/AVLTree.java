@@ -36,7 +36,7 @@ public class AVLTree<K extends Comparable,V> extends BST<K,V> {
 						 break;
 					 }
 					 P.setBalanceFactor(1); 
-				 } else { .
+				 } else { 
 					 if (P.balanceFactor() == -1) {
 						
 						 if (N.balanceFactor() == 1) { 
