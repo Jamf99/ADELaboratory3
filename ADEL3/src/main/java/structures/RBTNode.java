@@ -14,11 +14,11 @@ public class RBTNode<K extends Comparable,V> extends BSTNode implements Serializ
 		color=Color.RED;
 	}
 	public void recorrerSubArbol(String string, BSTNode<K,V> nil) {
-//		System.out.println(string+"color: "+color+" "+getValue()+" "+key);
-		if(izquierdo!=nil)
-			((RBTNode)izquierdo).recorrerSubArbol(string+"L",nil);
-		if(derecho!=nil)
-			((RBTNode)derecho).recorrerSubArbol(string+"R",nil);
+
+		if(Left!=nil)
+			((RBTNode)Left).recorrerSubArbol(string+"L",nil);
+		if(right!=nil)
+			((RBTNode)right).recorrerSubArbol(string+"R",nil);
 	}
 	public Color getColor() {
 		return color;

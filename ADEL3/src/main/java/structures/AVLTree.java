@@ -7,57 +7,57 @@ public class AVLTree<K extends Comparable,V> extends BST<K,V> {
 		if(key!=null && value!=null) {
 			AVLNode<K,V> z=new AVLNode<K,V>(key,value);
 			insert(z);
-			insertarFixeUp(z);
+			FixeUpInsert(z);
 		}
 	}
-	private void insertarFixeUp(AVLNode<K, V> z) {
+	private void FixeUpInsert(AVLNode<K, V> z) {
 		AVLNode<K,V> N=z;
-		AVLNode<K,V> P=(AVLNode<K, V>) z.getPadre();
+		AVLNode<K,V> P=(AVLNode<K, V>) z.getFather();
 		if(P!=null) {
 			do {
-				// P.balanceFactor() has not yet been updated!
-				AVLNode<K,V> left=(AVLNode<K, V>) P.getIzquierdo();
-				 if (left != null && N.compareTo(left)==0) { // the left subtree increases
-					 if (P.balanceFactor() == 1) { // The left column in the picture
-						 // ==> the temporary P.balanceFactor() == 2 ==> rebalancing is required.
-						 if (N.balanceFactor() == -1) { // Left Right Case
-							 leftRotate(N); // Reduce to Left Left Case
-							 N.actualizarFactorBalance();
-							 ((AVLNode)N.getPadre()).actualizarFactorBalance();
+				
+				AVLNode<K,V> left=(AVLNode<K, V>) P.getLeft();
+				 if (left != null && N.compareTo(left)==0) {
+					 if (P.balanceFactor() == 1) { 
+						
+						 if (N.balanceFactor() == -1) {
+							 LeftRotate(N); 
+							 N.UpdateFactorBalance();
+							 ((AVLNode)N.getFather()).UpdateFactorBalance();
 						 }
-						 // Left Left Case
+				
 						 rightRotate(P);
-						 P.actualizarFactorBalance();
-						 ((AVLNode)P.getPadre()).actualizarFactorBalance();
-						 break; // Leave the loop
+						 P.UpdateFactorBalance();
+						 ((AVLNode)P.getFather()).UpdateFactorBalance();
+						 break; 
 					 }
 					 if (P.balanceFactor() == -1) {
-						 P.setBalanceFactor(0); // N’s height increase is absorbed at P.
-						 break; // Leave the loop
+						 P.setBalanceFactor(0); 
+						 break;
 					 }
-					 P.setBalanceFactor(1); // Height increases at P
-				 } else { // N == right_child(P), the child whose height increases by 1.
-					 if (P.balanceFactor() == -1) { // The right column in the picture
-						 // ==> the temporary P.balanceFactor() == -2 ==> rebalancing is required.
-						 if (N.balanceFactor() == 1) { // Right Left Case
-							 rightRotate(N); // Reduce to Right Right Case
-							 N.actualizarFactorBalance();
-							 ((AVLNode)N.getPadre()).actualizarFactorBalance();
+					 P.setBalanceFactor(1); 
+				 } else { .
+					 if (P.balanceFactor() == -1) {
+						
+						 if (N.balanceFactor() == 1) { 
+							 rightRotate(N);
+							 N.UpdateFactorBalance();
+							 ((AVLNode)N.getFather()).UpdateFactorBalance();
 						 }
-						 // Right Right Case
-						 leftRotate(P);
-						 P.actualizarFactorBalance();
-						 ((AVLNode)P.getPadre()).actualizarFactorBalance();
-						 break; // Leave the loop
+					
+						 LeftRotate(P);
+						 P.UpdateFactorBalance();
+						 ((AVLNode)P.getFather()).UpdateFactorBalance();
+						 break; 
 					 }
 					 if (P.balanceFactor() == 1) {
-						 P.setBalanceFactor(0); // N’s height increase is absorbed at P.
-						 break; // Leave the loop
+						 P.setBalanceFactor(0); 
+						 break; 
 					 }
-					 P.setBalanceFactor(-1); // Height increases at P
+					 P.setBalanceFactor(-1); 
 				 }
 				 N = P;
-				 P = (AVLNode<K, V>) N.getPadre();
+				 P = (AVLNode<K, V>) N.getFather();
 			}while(P!=null);
 		}
 	}
@@ -79,21 +79,21 @@ public class AVLTree<K extends Comparable,V> extends BST<K,V> {
 	}
 	private void deleteFixeUp(AVLNode N) {
 		AVLNode G=null;
-		for (AVLNode X = (AVLNode) N.getPadre(); X != null; X = G) { 
-		    G = (AVLNode) X.getPadre(); 
-		    if (N == X.getIzquierdo()) {
+		for (AVLNode X = (AVLNode) N.getFather(); X != null; X = G) { 
+		    G = (AVLNode) X.getFather(); 
+		    if (N == X.getLeft()) {
 		        if (X.balanceFactor() < 0) { 
-		        	AVLNode Z = (AVLNode) X.getDerecho();
+		        	AVLNode Z = (AVLNode) X.getRight();
 		            int b = Z.balanceFactor();
 		            if (b > 0) {
 		            	rightRotate(Z);
-		            	Z.actualizarFactorBalance();
-		            	leftRotate(X);
-		            	X.actualizarFactorBalance();
+		            	Z.UpdateFactorBalance();
+		            	LeftRotate(X);
+		            	X.UpdateFactorBalance();
 		            }else {
 		            	System.out.println("HERE");
-		            	leftRotate(X);
-		            	X.actualizarFactorBalance();
+		            	LeftRotate(X);
+		            	X.UpdateFactorBalance();
 		            }
 		        } else {
 		            if (X.balanceFactor() == 0) {
@@ -106,16 +106,16 @@ public class AVLTree<K extends Comparable,V> extends BST<K,V> {
 		        }
 		    } else { 
 		        if (X.balanceFactor() > 0) {
-		            AVLNode Z = (AVLNode) X.getIzquierdo();
+		            AVLNode Z = (AVLNode) X.getLeft();
 		            int b = Z.balanceFactor();
 		            if (b < 0) {
-		            	leftRotate(Z);
-		            	Z.actualizarFactorBalance();
+		            	LeftRotate(Z);
+		            	Z.UpdateFactorBalance();
 		            	rightRotate(X);
-		            	X.actualizarFactorBalance();
+		            	X.UpdateFactorBalance();
 		            }else {
 		            	rightRotate(X);
-		            	X.actualizarFactorBalance();
+		            	X.UpdateFactorBalance();
 		            }
 		        } else {
 		            if (X.balanceFactor() == 0) {

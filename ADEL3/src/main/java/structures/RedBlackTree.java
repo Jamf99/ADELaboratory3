@@ -3,18 +3,17 @@ package structures;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-//import java.util.ArrayList;
 
 public class RedBlackTree<K extends Comparable,V> extends BST<K,V> implements Serializable{
 	
 	public RedBlackTree(){
 		super();
 		nil=new RBTNode<>(null,null);
-		nil.setPadre(nil);
-		nil.setDerecho(nil);
-		nil.setIzquierdo(nil);
+		nil.setFather(nil);
+		nil.setRight(nil);
+		nil.setLeft(nil);
 		((RBTNode<K, V>) nil).setColor(Color.BLACK);
-		raiz=nil;
+		root=nil;
 	}
 	
 	@Override
@@ -27,93 +26,93 @@ public class RedBlackTree<K extends Comparable,V> extends BST<K,V> implements Se
 	}
 	
 	private void insertFixeUp(RBTNode<K, V> z) {
-		while(((RBTNode<K, V>) z.getPadre()).getColor()==Color.RED){
-			if(z.getPadre()==z.getPadre().getPadre().getIzquierdo()){
-				RBTNode<K,V> y =(RBTNode<K, V>) z.getPadre().getPadre().getDerecho();
+		while(((RBTNode<K, V>) z.getFather()).getColor()==Color.RED){
+			if(z.getFather()==z.getFather().getFather().getLeft()){
+				RBTNode<K,V> y =(RBTNode<K, V>) z.getFather().getFather().getRight();
 				if(y.getColor()==Color.RED){
-					((RBTNode<K, V>) z.getPadre()).setColor(Color.BLACK);
+					((RBTNode<K, V>) z.getFather()).setColor(Color.BLACK);
 					y.setColor(Color.BLACK);
-					((RBTNode<K, V>) z.getPadre().getPadre()).setColor(Color.RED);
-					z=(RBTNode<K, V>) z.getPadre().getPadre();
-				}else if(z==z.getPadre().getDerecho()){
-					z=(RBTNode<K, V>) z.getPadre();
-					leftRotate(z);
+					((RBTNode<K, V>) z.getFather().getFather()).setColor(Color.RED);
+					z=(RBTNode<K, V>) z.getFather().getFather();
+				}else if(z==z.getFather().getRight()){
+					z=(RBTNode<K, V>) z.getFather();
+					LeftRotate(z);
 				}else{
-					((RBTNode<K, V>) z.getPadre()).setColor(Color.BLACK);
-					((RBTNode<K, V>) z.getPadre().getPadre()).setColor(Color.RED);
-					rightRotate(z.getPadre().getPadre());
+					((RBTNode<K, V>) z.getFather()).setColor(Color.BLACK);
+					((RBTNode<K, V>) z.getFather().getFather()).setColor(Color.RED);
+					rightRotate(z.getFather().getFather());
 				}
 			}else{
-				RBTNode<K,V> y =(RBTNode<K, V>) z.getPadre().getPadre().getIzquierdo();
+				RBTNode<K,V> y =(RBTNode<K, V>) z.getFather().getFather().getLeft();
 				if(y.getColor()==Color.RED){
-					((RBTNode<K, V>) z.getPadre()).setColor(Color.BLACK);
+					((RBTNode<K, V>) z.getFather()).setColor(Color.BLACK);
 					y.setColor(Color.BLACK);
-					((RBTNode<K, V>) z.getPadre().getPadre()).setColor(Color.RED);
-					z=(RBTNode<K, V>) z.getPadre().getPadre();
-				}else if(z==z.getPadre().getIzquierdo()){
-					z=(RBTNode<K, V>) z.getPadre();
+					((RBTNode<K, V>) z.getFather().getFather()).setColor(Color.RED);
+					z=(RBTNode<K, V>) z.getFather().getFather();
+				}else if(z==z.getFather().getLeft()){
+					z=(RBTNode<K, V>) z.getFather();
 					rightRotate(z);
 				}else{
-					((RBTNode<K, V>) z.getPadre()).setColor(Color.BLACK);
-					((RBTNode<K, V>) z.getPadre().getPadre()).setColor(Color.RED);
-					leftRotate(z.getPadre().getPadre());
+					((RBTNode<K, V>) z.getFather()).setColor(Color.BLACK);
+					((RBTNode<K, V>) z.getFather().getFather()).setColor(Color.RED);
+					LeftRotate(z.getFather().getFather());
 				}
 			}
 		}
-		((RBTNode<K, V>) raiz).setColor(Color.BLACK);
+		((RBTNode<K, V>) root).setColor(Color.BLACK);
 	}
 	
 	private void deleteFixeUp(RBTNode<K,V> x) {
-		while(x!=raiz && x.getColor()==Color.BLACK) {
-			if(x==x.getPadre().getIzquierdo()) {
-				RBTNode<K, V> w=(RBTNode<K, V>)x.getPadre().getDerecho();
+		while(x!=root && x.getColor()==Color.BLACK) {
+			if(x==x.getFather().getLeft()) {
+				RBTNode<K, V> w=(RBTNode<K, V>)x.getFather().getRight();
 				if(w.getColor()==Color.RED) {
 					w.setColor(Color.BLACK);
-					((RBTNode<K,V>)x.getPadre()).setColor(Color.RED);
-					leftRotate(x.getPadre());
-					w=((RBTNode<K,V>)x.getPadre().getDerecho());
+					((RBTNode<K,V>)x.getFather()).setColor(Color.RED);
+					LeftRotate(x.getFather());
+					w=((RBTNode<K,V>)x.getFather().getRight());
 				}
-				if(((RBTNode<K,V>)w.getIzquierdo()).getColor()==Color.BLACK &&
-						((RBTNode<K,V>)w.getDerecho()).getColor()==Color.BLACK) {
+				if(((RBTNode<K,V>)w.getLeft()).getColor()==Color.BLACK &&
+						((RBTNode<K,V>)w.getRight()).getColor()==Color.BLACK) {
 					w.setColor(Color.RED);
-					x=(RBTNode<K,V>)x.getPadre();
+					x=(RBTNode<K,V>)x.getFather();
 				}else{
-					if(((RBTNode<K,V>)w.getDerecho()).getColor()==Color.BLACK) {
-						((RBTNode<K,V>)w.getIzquierdo()).setColor(Color.BLACK);
+					if(((RBTNode<K,V>)w.getRight()).getColor()==Color.BLACK) {
+						((RBTNode<K,V>)w.getLeft()).setColor(Color.BLACK);
 						w.setColor(Color.RED);
 						rightRotate(w);
-						w=(RBTNode<K, V>) x.getPadre().getDerecho();
+						w=(RBTNode<K, V>) x.getFather().getRight();
 					}
-					w.setColor(((RBTNode<K, V>)x.getPadre()).getColor());
-					((RBTNode<K, V>)x.getPadre()).setColor(Color.BLACK);
-					((RBTNode<K, V>)w.getDerecho()).setColor(Color.BLACK);
-					leftRotate(x.getPadre());
-					x=(RBTNode<K, V>) raiz;
+					w.setColor(((RBTNode<K, V>)x.getFather()).getColor());
+					((RBTNode<K, V>)x.getFather()).setColor(Color.BLACK);
+					((RBTNode<K, V>)w.getRight()).setColor(Color.BLACK);
+					LeftRotate(x.getFather());
+					x=(RBTNode<K, V>) root;
 				}
 			}else {
-				RBTNode<K, V> w=(RBTNode<K, V>)x.getPadre().getIzquierdo();
+				RBTNode<K, V> w=(RBTNode<K, V>)x.getFather().getLeft();
 				if(w.getColor()==Color.RED) {
 					w.setColor(Color.BLACK);
-					((RBTNode<K,V>)x.getPadre()).setColor(Color.RED);
-					rightRotate(x.getPadre());
-					w=((RBTNode<K,V>)x.getPadre().getIzquierdo());
+					((RBTNode<K,V>)x.getFather()).setColor(Color.RED);
+					rightRotate(x.getFather());
+					w=((RBTNode<K,V>)x.getFather().getLeft());
 				}
-				if(((RBTNode<K,V>)w.getDerecho()).getColor()==Color.BLACK &&
-						((RBTNode<K,V>)w.getIzquierdo()).getColor()==Color.BLACK) {
+				if(((RBTNode<K,V>)w.getRight()).getColor()==Color.BLACK &&
+						((RBTNode<K,V>)w.getLeft()).getColor()==Color.BLACK) {
 					w.setColor(Color.RED);
-					x=(RBTNode<K,V>)x.getPadre();
+					x=(RBTNode<K,V>)x.getFather();
 				}else {
-					if(((RBTNode<K,V>)w.getIzquierdo()).getColor()==Color.BLACK) {
-						((RBTNode<K,V>)w.getDerecho()).setColor(Color.BLACK);
+					if(((RBTNode<K,V>)w.getLeft()).getColor()==Color.BLACK) {
+						((RBTNode<K,V>)w.getRight()).setColor(Color.BLACK);
 						w.setColor(Color.RED);
-						leftRotate(w);
-						w=(RBTNode<K, V>) x.getPadre().getIzquierdo();
+						LeftRotate(w);
+						w=(RBTNode<K, V>) x.getFather().getLeft();
 					}
-					w.setColor(((RBTNode<K, V>)x.getPadre()).getColor());
-					((RBTNode<K, V>)x.getPadre()).setColor(Color.BLACK);
-					((RBTNode<K, V>)w.getIzquierdo()).setColor(Color.BLACK);
-					rightRotate(x.getPadre());
-					x=(RBTNode<K, V>) raiz;
+					w.setColor(((RBTNode<K, V>)x.getFather()).getColor());
+					((RBTNode<K, V>)x.getFather()).setColor(Color.BLACK);
+					((RBTNode<K, V>) w.getLeft()).setColor(Color.BLACK);
+					rightRotate(x.getFather());
+					x=(RBTNode<K, V>) root;
 				}
 			}
 		}
@@ -135,11 +134,11 @@ public class RedBlackTree<K extends Comparable,V> extends BST<K,V> implements Se
 	}
 
 	public ArrayList<V> getElements() {
-		if(raiz == null) {
+		if(root == null) {
 			return null;
 		}else {
 			ArrayList<V> elements = new ArrayList<V>();
-			raiz.mostrarPreorden(elements);
+			root.Preorder(elements);
 			return elements;
 		}
 	}

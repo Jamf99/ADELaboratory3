@@ -4,36 +4,36 @@ import java.io.Serializable;
 
 public abstract class BST<K extends Comparable, V> implements IBST<K, V>, Serializable{
 
-	protected BSTNode<K, V> raiz;
+	protected BSTNode<K, V> root;
 	public BSTNode<K, V> nil;
 
 	public BST() {
 		nil = null;
-		raiz = nil;
+		root = nil;
 	}
 
 	protected void insert(BSTNode<K, V> z) {
 		BSTNode<K, V> y = null;
 		if (nil != null)
 			y = (BSTNode<K, V>) nil;
-		BSTNode<K, V> x = raiz;
+		BSTNode<K, V> x = root;
 		while (x != nil) {
 			y = x;
 			if (x.compareTo(z) > 0) {           
-				BSTNode<K, V> padre = x;
-				x = x.getIzquierdo();
-				if (x != nil && padre.altura == x.altura + 1)
-					padre.altura++;
-				if (padre.getDerecho() == nil && x == nil) {
-					padre.altura++;
+				BSTNode<K, V> Father = x;
+				x = x.getLeft();
+				if (x != nil && Father.hight == x.hight + 1)
+					Father.hight++;
+				if (Father.getRight() == nil && x == nil) {
+					Father.hight++;
 				}
 			} else if (x.compareTo(z) < 0) {
-				BSTNode<K, V> padre = x;
-				x = x.getDerecho();
-				if (x != nil && padre.altura == x.altura + 1)
-					padre.altura++;
-				if (padre.getIzquierdo() == nil && x == nil) {
-					padre.altura++;
+				BSTNode<K, V> Father = x;
+				x = x.getRight();
+				if (x != nil && Father.hight == x.hight + 1)
+					Father.hight++;
+				if (Father.getLeft() == nil && x == nil) {
+					Father.hight++;
 				}
 			} else {
 				BSTNode<K, V> w = x.getClon();
@@ -45,25 +45,25 @@ public abstract class BST<K extends Comparable, V> implements IBST<K, V>, Serial
 				BSTNode<K, V> p = null;
 				if (nil != null)
 					p = (BSTNode<K, V>) nil;
-				z.setDerecho(p);
-				z.setIzquierdo(p);
-				z.setPadre(p);
+				z.setRight(p);
+				z.setLeft(p);
+				z.setFather(p);
 				return;
 			}
 		}
-		z.setPadre(y);
+		z.setFather(y);
 		if (y == nil) {
-			raiz = z;
+			root = z;
 		} else if (y.compareTo(z) > 0) {
-			y.setIzquierdo(z);
+			y.setLeft(z);
 		} else {
-			y.setDerecho(z);
+			y.setRight(z);
 		}
 		BSTNode<K, V> p = null;
 		if (nil != null)
 			p = (BSTNode<K, V>) nil;
-		z.setDerecho(p);
-		z.setIzquierdo(p);
+		z.setRight(p);
+		z.setLeft(p);
 	}
 
 	public BSTNode<K, V> consultar(K key) {
@@ -72,12 +72,12 @@ public abstract class BST<K extends Comparable, V> implements IBST<K, V>, Serial
 		}
 		if (nil != null) {
 		}
-		BSTNode<K, V> x = raiz;
+		BSTNode<K, V> x = root;
 		while (x != nil) {
 			if (x.getKey().compareTo(key) > 0) {
-				x = x.getIzquierdo();
+				x = x.getLeft();
 			} else if (x.getKey().compareTo(key) < 0) {
-				x = x.getDerecho();
+				x = x.getRight();
 			} else {
 				return x;
 			}
@@ -85,58 +85,58 @@ public abstract class BST<K extends Comparable, V> implements IBST<K, V>, Serial
 		return null;
 	}
 
-	protected void leftRotate(BSTNode<K, V> x) {
-		BSTNode<K, V> y = x.getDerecho();
-		x.setDerecho(y.getIzquierdo());
-		if (y.getIzquierdo() != nil) {
-			y.getIzquierdo().setPadre(x);
+	protected void LeftRotate(BSTNode<K, V> x) {
+		BSTNode<K, V> y = x.getRight();
+		x.setRight(y.getLeft());
+		if (y.getLeft() != nil) {
+			y.getLeft().setFather(x);
 		}
-		y.setPadre(x.getPadre());
-		if (x.getPadre() == nil) {
-			raiz = y;
-		} else if (x == x.getPadre().getIzquierdo()) {
-			x.getPadre().setIzquierdo(y);
+		y.setFather(x.getFather());
+		if (x.getFather() == nil) {
+			root = y;
+		} else if (x == x.getFather().getLeft()) {
+			x.getFather().setLeft(y);
 		} else {
-			x.getPadre().setDerecho(y);
+			x.getFather().setRight(y);
 		}
-		y.setIzquierdo(x);
-		x.setPadre(y);
-		x.actualizarAltura();
-		y.actualizarAltura();
+		y.setLeft(x);
+		x.setFather(y);
+		x.actualizarhight();
+		y.actualizarhight();
 	}
 
 	protected void rightRotate(BSTNode<K, V> x) {
-		BSTNode<K, V> y = x.getIzquierdo();
-		x.setIzquierdo(y.getDerecho());
-		if (y.getDerecho() != nil) {
-			y.getDerecho().setPadre(x);
+		BSTNode<K, V> y = x.getLeft();
+		x.setLeft(y.getRight());
+		if (y.getRight() != nil) {
+			y.getRight().setFather(x);
 		}
-		y.setPadre(x.getPadre());
-		if (x.getPadre() == nil) {
-			raiz = y;
-		} else if (x == x.getPadre().getIzquierdo()) {
-			x.getPadre().setIzquierdo(y);
+		y.setFather(x.getFather());
+		if (x.getFather() == nil) {
+			root = y;
+		} else if (x == x.getFather().getLeft()) {
+			x.getFather().setLeft(y);
 		} else {
-			x.getPadre().setDerecho(y);
+			x.getFather().setRight(y);
 		}
-		y.setDerecho(x);
-		x.setPadre(y);
-		x.actualizarAltura();
-		y.actualizarAltura();
+		y.setRight(x);
+		x.setFather(y);
+		x.actualizarhight();
+		y.actualizarhight();
 	}
 
 	public boolean estaVacio() {
-		if (raiz == null)
+		if (root == null)
 			return true;
 		return false;
 	}
 
-	public BSTNode<K, V> getRaiz() {
-		return raiz;
+	public BSTNode<K, V> getroot() {
+		return root;
 	}
 
-	public void setRaiz(BSTNode<K, V> raiz) {
-		this.raiz = raiz;
+	public void setroot(BSTNode<K, V> root) {
+		this.root = root;
 	}
 	
 	public abstract void insert(K key, V value);
@@ -144,52 +144,52 @@ public abstract class BST<K extends Comparable, V> implements IBST<K, V>, Serial
 	public abstract BSTNode<K,V> delete(K key);
 
 	private BSTNode<K, V> sucesor(BSTNode<K,V> x) {
-		if(x.getDerecho()!=nil) {
-			return minimo(x.getDerecho());
+		if(x.getRight()!=nil) {
+			return minimum(x.getRight());
 		}
-		BSTNode<K,V> y=x.getPadre();
-		while(y!=nil && x==y.getDerecho()) {
+		BSTNode<K,V> y=x.getFather();
+		while(y!=nil && x==y.getRight()) {
 			x=y;
-			y=y.getPadre();
+			y=y.getFather();
 		}
 		return y;
 	}
 
-	private BSTNode<K, V> minimo(BSTNode<K, V> d) {
+	private BSTNode<K, V> minimum(BSTNode<K, V> d) {
 		BSTNode<K,V>actual=d;
-		while(actual.getIzquierdo()!=nil) {
-			actual=actual.getIzquierdo();
+		while(actual.getLeft()!=nil) {
+			actual=actual.getLeft();
 		}
 		return actual;
 	}
 	protected BSTNode[] delete(BSTNode<K, V> z) {
 		BSTNode<K,V> y=nil;
-		if (z.getDerecho()==nil || z.getIzquierdo()==nil) {
+		if (z.getRight()==nil || z.getLeft()==nil) {
 			y=z;
 		}else{
 			y=sucesor(z);
 		}
 		BSTNode<K,V> x=nil;
-		if(y.getIzquierdo()!=nil) {
-			x=y.getIzquierdo();
+		if(y.getLeft()!=nil) {
+			x=y.getLeft();
 		}else {
-			x=y.getDerecho();
+			x=y.getRight();
 		}
 		
 		if(x!=null) {
-			x.setPadre(y.getPadre());	
+			x.setFather(y.getFather());	
 		}
-		if(y.getPadre()==nil) {
-			raiz=x;
+		if(y.getFather()==nil) {
+			root=x;
 		}else {
-			if(y==y.getPadre().getIzquierdo()) {
-				y.getPadre().setIzquierdo(x);
+			if(y==y.getFather().getLeft()) {
+				y.getFather().setLeft(x);
 			}else {
-				y.getPadre().setDerecho(x);
+				y.getFather().setRight(x);
 			}
 		}
 		if(nil==null && x==null) {
-			x=y.getPadre();
+			x=y.getFather();
 		}
 		
 		if(y!=z) {

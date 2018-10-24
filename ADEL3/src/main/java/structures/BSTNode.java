@@ -7,10 +7,10 @@ public abstract class BSTNode <K extends Comparable, V> implements Comparable, S
 
 	protected K key;
 	protected V value;
-	protected int altura;
-	protected BSTNode<K,V> padre;
-	protected BSTNode<K,V> derecho;
-	protected BSTNode<K,V> izquierdo;
+	protected int hight;
+	protected BSTNode<K,V> Father;
+	protected BSTNode<K,V> right;
+	protected BSTNode<K,V> Left;
 	protected BSTNode<K,V> clon;
 	
 	public BSTNode (K llave, V value) {
@@ -34,28 +34,28 @@ public abstract class BSTNode <K extends Comparable, V> implements Comparable, S
 		this.value = value;
 	}
 
-	public BSTNode<K, V> getPadre() {
-		return padre;
+	public BSTNode<K, V> getFather() {
+		return Father;
 	}
 
-	public void setPadre(BSTNode<K, V> padre) {
-		this.padre = padre;
+	public void setFather(BSTNode<K, V> Father) {
+		this.Father = Father;
 	}
 
-	public BSTNode<K, V> getDerecho() {
-		return derecho;
+	public BSTNode<K, V> getRight() {
+		return right;
 	}
 
-	public void setDerecho(BSTNode<K, V> derecho) {
-		this.derecho = derecho;
+	public void setRight(BSTNode<K, V> right) {
+		this.right = right;
 	}
 
-	public BSTNode<K, V> getIzquierdo() {
-		return izquierdo;
+	public BSTNode<K, V> getLeft() {
+		return Left;
 	}
 
-	public void setIzquierdo(BSTNode<K, V> izquierdo) {
-		this.izquierdo = izquierdo;
+	public void setLeft(BSTNode<K, V> Left) {
+		this.Left = Left;
 	}
 
 	public BSTNode<K, V> getClon() {
@@ -66,26 +66,26 @@ public abstract class BSTNode <K extends Comparable, V> implements Comparable, S
 		this.clon = clon;
 	}
 	
-	public void actualizarAltura() {
-		if(derecho==null && izquierdo==null) {
-			altura=-1;
-		}else if(derecho==null) {
-			altura=izquierdo.altura;
-		}else if(izquierdo==null) {
-			altura=derecho.altura;
+	public void actualizarhight() {
+		if(right==null && Left==null) {
+			hight=-1;
+		}else if(right==null) {
+			hight=Left.hight;
+		}else if(Left==null) {
+			hight=right.hight;
 		}else {
-			altura=Math.max(derecho.altura,izquierdo.altura);
+			hight=Math.max(right.hight,Left.hight);
 		}
-		altura++;
+		hight++;
 	}
 	
-	public void mostrarPreorden(ArrayList<V> e) {
+	public void Preorder(ArrayList<V> e) {
 		e.add(getValue());
-		if(izquierdo.getValue() != null) {
-			izquierdo.mostrarPreorden(e);
+		if(Left.getValue() != null) {
+			Left.Preorder(e);
 		}
-		if(derecho.getValue() != null) {
-			derecho.mostrarPreorden(e); 
+		if(right.getValue() != null) {
+			right.Preorder(e); 
 		}
 	}
 		
