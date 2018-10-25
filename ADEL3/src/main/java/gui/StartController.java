@@ -154,6 +154,7 @@ public class StartController implements Initializable{
 
     	Optional<String> result = dialog.showAndWait();
     	if (result.isPresent()){
+    		try {
     		Player p = fiba.searchPlayersRB(Double.parseDouble(result.get()));
         	refresh(p);
         	Alert alert = new Alert(AlertType.INFORMATION);
@@ -161,6 +162,12 @@ public class StartController implements Initializable{
         	alert.setHeaderText("A player with "+result.get()+" points has been found");
         	alert.setContentText(p.getName());
         	alert.showAndWait();
+        	}catch(Exception e) {
+        		Alert alert= new Alert(AlertType.ERROR);
+        		alert.setTitle("message");
+        		alert.setHeaderText("No similarities had been found");
+        		alert.show();
+        		}
     	}
     }
     
@@ -176,13 +183,21 @@ public class StartController implements Initializable{
 
     	Optional<String> result = dialog.showAndWait();
     	if (result.isPresent()){
+    		try {
     		Player p = fiba.searchPlayersRB(Double.parseDouble(result.get()));
         	refresh(p);
-        	Alert alert = new Alert(AlertType.INFORMATION);
+           	Alert alert = new Alert(AlertType.INFORMATION);
         	alert.setTitle("Found player");
         	alert.setHeaderText("A player with "+result.get()+" rebounds has been found");
         	alert.setContentText(p.getName());
         	alert.showAndWait();
+    		}catch(Exception e) {
+    		Alert alert= new Alert(AlertType.ERROR);
+    		alert.setTitle("message");
+    		alert.setHeaderText("No similarities had been found");
+    		alert.show();
+    		}
+     
     	}
     }
     
@@ -197,7 +212,8 @@ public class StartController implements Initializable{
     	dialog.setContentText("");
 
     	Optional<String> result = dialog.showAndWait();
-    	if (result.isPresent()){
+    	if (result.isPresent()) {
+    		try {
     		Player p = fiba.searchPlayersRB(Double.parseDouble(result.get()));
         	refresh(p);
         	Alert alert = new Alert(AlertType.INFORMATION);
@@ -205,6 +221,12 @@ public class StartController implements Initializable{
         	alert.setHeaderText("A player with "+result.get()+" stealings has been found");
         	alert.setContentText(p.getName());
         	alert.showAndWait();
+    		}catch(Exception e) {
+        		Alert alert= new Alert(AlertType.ERROR);
+        		alert.setTitle("message");
+        		alert.setHeaderText("No similarities had been found");
+        		alert.show();
+        		}
     	}
     }
     
@@ -220,6 +242,7 @@ public class StartController implements Initializable{
 
     	Optional<String> result = dialog.showAndWait();
     	if (result.isPresent()){
+    		try {
     		Player p = fiba.searchPlayersAVL(Double.parseDouble(result.get()));
         	refresh(p);
         	Alert alert = new Alert(AlertType.INFORMATION);
@@ -227,6 +250,12 @@ public class StartController implements Initializable{
         	alert.setHeaderText("A player with "+result.get()+" blocks has been found");
         	alert.setContentText(p.getName());
         	alert.showAndWait();
+    		}catch(Exception e) {
+        		Alert alert= new Alert(AlertType.ERROR);
+        		alert.setTitle("message");
+        		alert.setHeaderText("No similarities had been found");
+        		alert.show();
+        		}
     	}
     }
     
@@ -242,6 +271,7 @@ public class StartController implements Initializable{
 
     	Optional<String> result = dialog.showAndWait();
     	if (result.isPresent()){
+    		try {
     		Player p = fiba.searchPlayersAVL(Double.parseDouble(result.get()));
         	refresh(p);
         	Alert alert = new Alert(AlertType.INFORMATION);
@@ -249,6 +279,12 @@ public class StartController implements Initializable{
         	alert.setHeaderText("A player with "+result.get()+" assists has been found");
         	alert.setContentText(p.getName());
         	alert.showAndWait();
+    		}catch(Exception e) {
+        		Alert alert= new Alert(AlertType.ERROR);
+        		alert.setTitle("message");
+        		alert.setHeaderText("No similarities had been found");
+        		alert.show();
+        		}
     	}
     }
 
